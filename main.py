@@ -3,8 +3,11 @@ from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty, ReferenceListProperty, \
     ObjectProperty
-from kivy.vector import Vector
 from kivy.clock import Clock
+from kivy.lang import Builder
+from scramblejet import ScrambleJet
+
+Builder.load_file('sprites.kv')
 
 # todo fix this
 UP = 273
@@ -12,19 +15,11 @@ DOWN = 274
 LEFT = 276
 RIGHT = 275
 MOVE_DISTANCE = 5
-
-class ScrambleJet(Widget):
-    velocity_x = NumericProperty(0)
-    velocity_y = NumericProperty(0)
-    velocity = ReferenceListProperty(velocity_x, velocity_y)
-
-    def move(self):
-        self.pos = Vector(*self.velocity) + self.pos
-
+SHOOT = 32
 
 class ScrambleGame(Widget):
     jet = ObjectProperty(None)
-    keys_down = {UP: False, DOWN: False, LEFT: False, RIGHT: False}
+    keys_down = {UP: False, DOWN: False, LEFT: False, RIGHT: False, SHOOT: False}
 
     def update(self, dt):
         self.jet.move()
@@ -37,10 +32,12 @@ class ScrambleGame(Widget):
             self.jet.center_x -= MOVE_DISTANCE
         if self.keys_down[RIGHT] and self.jet.right < self.right:
             self.jet.center_x += MOVE_DISTANCE
+        if self.keys_down[SHOOT]:
+            self.jet.shoot()
 
     def key_down(self, keyboard, keycode, *args):
         self.keys_down[keycode] = True
-        print "got a key event: %s" % keycode
+        # print "got a key event: %s" % keycode
 
     def key_up(self, keyboard, keycode, *args):
         self.keys_down[keycode] = False

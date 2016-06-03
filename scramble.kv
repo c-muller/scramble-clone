@@ -1,22 +1,11 @@
-#:include debug.kv
-
-<ScrambleJet>:
-    size: 50, 50
-    canvas:
-        Ellipse:
-            pos: self.pos
-            size: self.size
+# #:include debug.kv
 
 <ScrambleGame>:
     id: _mainscreen
     jet: _scramble_jet
 
-    canvas:
-        Rectangle:
-            pos: self.center_x-5, 0
-            size: 10, self.height
-
     ScrambleJet:
         id: _scramble_jet
+        mainscreen: _mainscreen
         center_x: self.parent.x + 20
         center_y: self.parent.center_y
