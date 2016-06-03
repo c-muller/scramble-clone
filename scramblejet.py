@@ -24,7 +24,6 @@ class ScrambleJet(Image):
 
 
     def shoot(self):
-        '''Shoot straight up.'''
         missile = Missile()
         missile.center = (self.right, self.center_y)
         self.mainscreen.add_widget(missile)

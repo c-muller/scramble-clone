@@ -24,7 +24,8 @@ class Projectile(Image):
         pass
 
     def on_progress(self, instance, value, progression):
-        pass
+        if self.target.collide_projectile(self):
+            self.animation.stop(self)
 
     def on_stop(self, instance, value):
         self.parent.remove_widget(self)
